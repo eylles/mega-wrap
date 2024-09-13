@@ -100,11 +100,17 @@ else
       -h|--help)
         _help 0
         ;;
+      -n|--dryrun)
+        DryRun=1
+        ;;
       *) # do nothing
         :
         ;;
     esac
   done
-  # echo "$_comm " "$CONFIG"
-  $_binpath/$usename "$_comm" --config "$CONFIG" "$@"
+  if [ -z "$DryRun" ]; then
+    $_binpath/$usename "$_comm" --config "$CONFIG" "$@"
+  else
+    echo "$_comm " "$CONFIG" "$@"
+  fi
 fi
