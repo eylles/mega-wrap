@@ -89,6 +89,14 @@ _help() {
   exit "$1"
 }
 
+dispatcher () {
+  if [ -z "$DryRun" ]; then
+    $_binpath/$usename "$_comm" --config "$CONFIG" "$@"
+  else
+    printf '%s: %s %s %s\n' "$myname" "$_comm " "$CONFIG" "$@"
+  fi
+}
+
 # echo "$myname"
 # echo "$#"
 
@@ -109,9 +117,5 @@ else
     esac
     shift
   done
-  if [ -z "$DryRun" ]; then
-    $_binpath/$usename "$_comm" --config "$CONFIG" "$arguments"
-  else
-    echo "$_comm " "$CONFIG" "$arguments"
-  fi
+  dispatcher $arguments
 fi
