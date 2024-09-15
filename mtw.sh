@@ -129,7 +129,7 @@ else
       -h|--help)
         _help 0
         ;;
-      --dryrun)
+      --dryrun|dryrun|-n)
         DryRun=1
         ;;
       --file|file|-f)
