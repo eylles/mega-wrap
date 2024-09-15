@@ -100,22 +100,51 @@ dispatcher () {
 # echo "$myname"
 # echo "$#"
 
+# Usage: read_file file
+#
+# Return: string 'line'
+read_file() {
+  while read -r FileLine
+  do
+    printf '%s\n' "$FileLine"
+  done < "$1"
+}
+
+file_handler () {
+  if [ -f "$1" ]; then
+      for link in $(read_file "$1"); do
+        dispatcher "$link"
+      done
+  else
+    printf '%s: %s\n' "$myname" "argument ${1} is not a valid file!"
+    exit 1
+  fi
+}
+
 if [ "$#" -eq 0 ]; then
   _help 1 "no arguments"
 else
-  for arg in "$@"; do
-    case "$arg" in
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
       -h|--help)
         _help 0
         ;;
       --dryrun)
         DryRun=1
         ;;
+      --file|file|-f)
+        file="$2"
+        shift
+        ;;
       *) # do nothing
-        arguments="${arguments} ${arg}"
+        arguments="${arguments} ${1}"
         ;;
     esac
     shift
   done
-  dispatcher $arguments
+  if [ -n "$file" ]; then
+    file_handler "$file"
+  else
+    dispatcher $arguments
+  fi
 fi
