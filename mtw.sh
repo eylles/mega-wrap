@@ -34,50 +34,50 @@ case "$1" in
     ls)
         _comm="ls"
         shift
-        ;;
+    ;;
     df)
         _comm="df"
         shift
-        ;;
+    ;;
     test)
         _comm="test"
         shift
-        ;;
+    ;;
     export)
         _comm="export"
         shift
-        ;;
+    ;;
     put)
         _comm="put"
         shift
-        ;;
+    ;;
     mkdir)
         _comm="mkdir"
         shift
-        ;;
+    ;;
     get)
         _comm="get"
         shift
-        ;;
+    ;;
     copy)
         _comm="copy"
         shift
-        ;;
+    ;;
     rm)
         _comm="rm"
         shift
-        ;;
+    ;;
     dl)
         _comm="dl"
         shift
-        ;;
+    ;;
     reg)
         _comm="reg"
         shift
-        ;;
+    ;;
     *)
         : # do nothing
-        ;;
+    ;;
 esac
 
 # string variable for internationalization
@@ -140,17 +140,17 @@ else
         case "$1" in
             -h|--help)
                 _help 0
-                ;;
+            ;;
             --dryrun|dryrun|-n)
                 DryRun=1
-                ;;
+            ;;
             --file|file|-f)
                 file="$2"
                 shift
-                ;;
+            ;;
             *) # do nothing
                 arguments="${arguments} ${1}"
-                ;;
+            ;;
         esac
         shift
     done
