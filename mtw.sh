@@ -95,7 +95,7 @@ _help() {
     printf '\t%s\n' "$helpdsc1"
     printf '\t%s\n' "$helpdsc2"
     printf '\t%s\n' "$helpdsc3"
-    printf '%s:\n' "$usagestr"
+    printf '%s:\n'  "$usagestr"
     printf '\t%s\n' "$usagemsg"
     $_binpath/$usename "$_comm" -h
     exit "$1"
@@ -105,7 +105,7 @@ dispatcher () {
     if [ -z "$DryRun" ]; then
         $_binpath/$usename "$_comm" --config "$CONFIG" "$@"
     else
-        printf '%s: %s %s %s\n' "$myname" "$_comm " "$CONFIG" "$@"
+        printf '%s %s %s %s\n' "$_binpath/$usename" "$_comm " "$CONFIG" "$@"
     fi
 }
 
@@ -124,7 +124,9 @@ read_file() {
 
 file_handler () {
     if [ -f "$1" ]; then
+        printf "%s: %s\n" "$myname" "downloading links from file '${1}'"
         for link in $(read_file "$1"); do
+            printf "\n%s: %s\n" "$myname" "downloading link '${link}'"
             dispatcher "$link"
         done
     else
