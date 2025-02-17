@@ -4,7 +4,7 @@
 myname="${0##*/}"
 
 # program name to use if links are used
-usename=""
+usename="megatools"
 
 # megatools command to run
 _comm=""
