@@ -30,62 +30,12 @@ case "${myname}" in
     megatest)       usename="megatest"   ;;
 esac
 
-case "$1" in
-    ls)
-        _comm="ls"
-        shift
-    ;;
-    df)
-        _comm="df"
-        shift
-    ;;
-    test)
-        _comm="test"
-        shift
-    ;;
-    export)
-        _comm="export"
-        shift
-    ;;
-    put)
-        _comm="put"
-        shift
-    ;;
-    mkdir)
-        _comm="mkdir"
-        shift
-    ;;
-    get)
-        _comm="get"
-        shift
-    ;;
-    copy)
-        _comm="copy"
-        shift
-    ;;
-    rm)
-        _comm="rm"
-        shift
-    ;;
-    dl)
-        _comm="dl"
-        shift
-    ;;
-    reg)
-        _comm="reg"
-        shift
-    ;;
-    *)
-        : # do nothing
-    ;;
-esac
-
 # string variable for internationalization
 helpstr=help
 helpdsc1="megatools wrapper to seamlessly load your megarc"
 helpdsc2="megarc is loaded from '\$XDG_CONFIG_HOME/mega/megarc' as '\$CONFIG'"
 helpdsc3="arguments to every command are prepended with: '--config \$CONFIG'"
-usagestr=usage
+usagestr=Usage
 usagemsg="simply replace 'megatools' with $myname in command"
 
 _help() {
@@ -135,26 +85,83 @@ file_handler () {
     fi
 }
 
+#parse short opts
+while getopts "hnf:" o; do case "${o}" in
+    n) DryRun=1 ;;
+    f) file="$OPTARG" ;;
+    h) _help 0 ;;
+    *) _help 1 ;;
+esac done
+shift $(( OPTIND - 1 ))
+
 if [ "$#" -eq 0 ]; then
     _help 1 "no arguments"
 else
+    # parse long opts
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            -h|--help)
+            help|--help|-h)
                 _help 0
             ;;
-            --dryrun|dryrun|-n)
+            dryrun|--dryrun|-n)
                 DryRun=1
+                shift
             ;;
-            --file|file|-f)
-                file="$2"
+            file|--file|-f)
+                shift
+                file="$1"
+                shift
+            ;;
+            ls)
+                _comm="ls"
+                shift
+            ;;
+            df)
+                _comm="df"
+                shift
+            ;;
+            test)
+                _comm="test"
+                shift
+            ;;
+            export)
+                _comm="export"
+                shift
+            ;;
+            put)
+                _comm="put"
+                shift
+            ;;
+            mkdir)
+                _comm="mkdir"
+                shift
+            ;;
+            get)
+                _comm="get"
+                shift
+            ;;
+            copy)
+                _comm="copy"
+                shift
+            ;;
+            rm)
+                _comm="rm"
+                shift
+            ;;
+            dl)
+                _comm="dl"
+                shift
+            ;;
+            reg)
+                _comm="reg"
                 shift
             ;;
             *) # do nothing
+                # :
                 arguments="${arguments} ${1}"
+                shift
             ;;
         esac
-        shift
     done
     if [ -n "$file" ]; then
         file_handler "$file"
