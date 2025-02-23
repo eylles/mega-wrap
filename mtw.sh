@@ -59,11 +59,7 @@ dispatcher () {
     fi
 }
 
-# echo "$myname"
-# echo "$#"
-
 # Usage: read_file file
-#
 # Return: string 'line'
 read_file() {
     while read -r FileLine
@@ -165,7 +161,8 @@ else
     done
     if [ -n "$file" ]; then
         file_handler "$file"
-    else
+    fi
+    if [ -n "$arguments" ]; then
         dispatcher $arguments
     fi
 fi
