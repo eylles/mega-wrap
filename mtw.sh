@@ -33,20 +33,38 @@ esac
 # string variable for internationalization
 helpstr=help
 helpdsc1="megatools wrapper to seamlessly load your megarc"
-helpdsc2="megarc is loaded from '\$XDG_CONFIG_HOME/mega/megarc' as '\$CONFIG'"
-helpdsc3="arguments to every command are prepended with: '--config \$CONFIG'"
+helpdsc2="megarc is loaded from '\$XDG_CONFIG_HOME/mega/megarc' as '\$CONFIG'."
+helpdsc3="arguments to every command are prepended with: '--config \$CONFIG'."
 usagestr=Usage
-usagemsg="simply replace 'megatools' with $myname in command"
+usagemsg="simply replace 'megatools' with $myname in command."
+optionsstr="Options"
+optionsmsg="these options apply only to the wrapper."
+optfilestr="-f <file>, --file <file>, file <file>"
+optfilemsg="use download links from the provided text file."
+optdryrstr="-n, --dryrun, dryrun"
+optdryrmsg="perform no action and only output the megatools command to run."
+opthelpstr="-h, --help, help"
+opthelpmsg="show this wrapper's help message."
 
 _help() {
     _mesg=""
-    [ -n "$2" ] && _mesg="$2"
-    printf '%s %s:\t%s\n' "$myname" "$helpstr" "$_mesg"
-    printf '\t%s\n' "$helpdsc1"
-    printf '\t%s\n' "$helpdsc2"
-    printf '\t%s\n' "$helpdsc3"
+    if [ -n "$2" ]; then
+        printf '%s: %s\n' "$myname" _mesg="$2"
+    fi
+    printf '%s %s:\n' "$myname" "$helpstr"
+    printf '  %s\n' "$helpdsc1"
+    printf '  %s\n' "$helpdsc2"
+    printf '  %s\n' "$helpdsc3"
     printf '%s:\n'  "$usagestr"
-    printf '\t%s\n' "$usagemsg"
+    printf '  %s\n' "$usagemsg"
+    printf '%s:\n'  "$optionsstr"
+    printf '  %s\n' "$optionsmsg"
+    printf '  %s\n' "$optfilestr"
+    printf '\t%s\n' "$optfilemsg"
+    printf '  %s\n' "$optdryrstr"
+    printf '\t%s\n' "$optdryrmsg"
+    printf '  %s\n' "$opthelpstr"
+    printf '\t%s\n' "$opthelpmsg"
     $_binpath/$usename "$_comm" -h
     exit "$1"
 }
