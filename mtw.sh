@@ -13,7 +13,7 @@ _comm=""
 _binpath="/usr/bin"
 
 #config file
-CONFIG="${XDG_CONFIG_HOME:-~/.config}/mega/megarc"
+CONFIG="${XDG_CONFIG_HOME:-${HOME}/.config}/mega/megarc"
 
 case "${myname}" in
     mts|mtwrap|mtw) usename="megatools"  ;;
