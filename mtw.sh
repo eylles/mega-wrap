@@ -72,6 +72,12 @@ _help() {
 dispatcher () {
     if [ -z "$DryRun" ]; then
         $_binpath/$usename "$_comm" --config "$CONFIG" "$@"
+        exitstatus="$?"
+        if [ "$exitstatus" -ne 0 ]; then
+            printf '%s\n' \
+                "$myname: megatools invocation failed, trying without config."
+            $_binpath/$usename "$_comm" "$@"
+        fi
     else
         printf '%s %s %s %s\n' "$_binpath/$usename" "$_comm " "$CONFIG" "$@"
     fi
